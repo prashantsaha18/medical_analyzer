@@ -1,0 +1,13 @@
+streamlit>=1.32.0
+torch>=2.0.0
+torchvision>=0.15.0
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+psycopg2-binary>=2.9.0
+bcrypt>=4.0.0
+reportlab>=4.0.0
+scikit-learn>=1.4.0
+kaggle>=1.6.0
+tqdm>=4.65.0
