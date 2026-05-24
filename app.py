@@ -61,14 +61,14 @@ def _go(page: str) -> None:
 # ── LOGIN PAGE ────────────────────────────────────────────────────────────────
 # ─────────────────────────────────────────────────────────────────────────────
 def page_login() -> None:
-    _, col, _ = st.columns([1, 2, 1])
+    _, col, _ = st.columns([1, 1.8, 1])
     with col:
         st.markdown(
             """
-<div style="text-align:center;padding:2.5rem 0 1.5rem">
-  <div style="font-size:3.5rem">🏥</div>
-  <h1 style="font-size:2rem;margin:.4rem 0 .2rem;font-weight:800">MedAI Diagnostics</h1>
-  <p style="color:#8b949e;font-size:.88rem">AI-Powered Medical Image Analysis</p>
+<div class="float-card" style="text-align:center;padding:3rem 0 2rem;margin-bottom:1rem">
+  <div class="pulse-icon" style="font-size:4.5rem;margin-bottom:0.8rem">🏥</div>
+  <h1 style="font-size:2.8rem;margin:0;font-weight:800;background:linear-gradient(135deg,#388bfd,#8957e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent">MedAI Diagnostics</h1>
+  <p style="color:#8b949e;font-size:1.02rem;margin-top:0.6rem;font-weight:400;letter-spacing:0.5px">Next-Generation AI Clinical Image Analytics</p>
 </div>""",
             unsafe_allow_html=True,
         )
@@ -90,17 +90,6 @@ def page_login() -> None:
                     st.rerun()
                 else:
                     st.error(f"❌ {msg}")
-
-            st.markdown(
-                """
-<div style="background:#161b22;border:1px solid #30363d;border-radius:10px;
-  padding:12px 16px;margin-top:10px;font-size:.82rem;color:#8b949e">
-  <b style="color:#e6edf3">🎯 Demo Account</b><br>
-  Username: <code style="color:#58a6ff">demo_doctor</code> &nbsp;
-  Password: <code style="color:#58a6ff">Demo@1234</code>
-</div>""",
-                unsafe_allow_html=True,
-            )
 
         with tab_up:
             with st.form("form_signup"):
@@ -124,7 +113,7 @@ def page_login() -> None:
                         st.error(f"❌ {msg}")
 
         st.markdown(
-            '<p style="text-align:center;color:#464f58;font-size:.72rem;margin-top:1.2rem">'
+            '<p style="text-align:center;color:#464f58;font-size:.78rem;margin-top:1.8rem">'
             "For research and educational use · All findings require clinical validation"
             "</p>",
             unsafe_allow_html=True,
