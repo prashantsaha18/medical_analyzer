@@ -243,3 +243,52 @@ def mem_get_stats(uid):
     scans = [s for s in _M["scans"] if s["doctor_id"]==uid]
     crit  = len([s for s in scans if s.get("severity") in ("Critical","High")])
     return {"patients":pts,"scans":len(scans),"critical":crit,"reports":0}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PUBLIC WRAPPER API
+# ─────────────────────────────────────────────────────────────────────────────
+def is_db_available() -> bool:
+    return get_conn() is not None
+
+def db_get_stats(uid: int) -> dict:
+    if is_db_available():
+        return get_dashboard_stats(uid)
+    else:
+        return mem_get_stats(uid)
+
+def db_get_all_scans(uid: int, limit=50) -> list:
+    if is_db_available():
+        return get_all_scans(uid, limit)
+    else:
+        return mem_get_all_scans(uid, limit)
+
+def db_get_patients(uid: int) -> list:
+    if is_db_available():
+        return get_patients(uid)
+    else:
+        return mem_get_patients(uid)
+
+def db_save_scan(patient_id, scan_type, filename, result, findings, doctor_id) -> Optional[int]:
+    if is_db_available():
+        return save_scan(patient_id, scan_type, filename, result, findings, doctor_id)
+    else:
+        return mem_save_scan(patient_id, scan_type, filename, result, findings, doctor_id)
+
+def db_get_patient(pid: str) -> Optional[dict]:
+    if is_db_available():
+        return get_patient(pid)
+    else:
+        return mem_get_patient(pid)
+
+def db_get_scans(patient_id: str) -> list:
+    if is_db_available():
+        return get_scans(patient_id)
+    else:
+        return mem_get_scans(patient_id)
+
+def db_add_patient(data: dict, created_by: int) -> bool:
+    if is_db_available():
+        return add_patient(data, created_by)
+    else:
+        mem_add_patient(data, created_by)
+        return True
