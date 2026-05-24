@@ -203,3 +203,20 @@ def generate_pdf_report(patient, result, findings, doctor_name,
     story.append(sig)
     doc.build(story)
     return buf.getvalue()
+
+
+# ── Public aliases expected by app.py ─────────────────────────────────────────
+RL_OK = REPORTLAB_OK
+
+
+def generate_pdf(patient, result, findings, doctor_name,
+                 heatmap_arr=None, original_pil=None) -> bytes:
+    """Wrapper that maps app.py's parameter names to generate_pdf_report."""
+    return generate_pdf_report(
+        patient=patient,
+        result=result,
+        findings=findings,
+        doctor_name=doctor_name,
+        heatmap_img=heatmap_arr,
+        original_img=original_pil,
+    )
