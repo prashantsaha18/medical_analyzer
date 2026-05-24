@@ -129,18 +129,17 @@ def render_sidebar() -> None:
         # User info
         st.markdown(
             f"""
-<div style="padding:12px 4px 10px;border-bottom:1px solid #21262d;margin-bottom:8px">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div style="width:42px;height:42px;border-radius:50%;
-      background:linear-gradient(135deg,#1f6feb,#388bfd);
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.25rem;flex-shrink:0">👨‍⚕️</div>
-    <div>
-      <div style="font-weight:700;font-size:.88rem;color:#e6edf3;line-height:1.2">
-        {user.get("full_name") or user["username"]}</div>
-      <div style="font-size:.68rem;color:#484f58;text-transform:capitalize">
-        {user.get("role", "doctor")}</div>
-    </div>
+<div style="padding:16px;background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(139,92,246,0.06));
+  border:1px solid rgba(255,255,255,0.06);border-radius:16px;margin:8px 0 20px;display:flex;align-items:center;gap:12px">
+  <div style="width:44px;height:44px;border-radius:12px;
+    background:linear-gradient(135deg,#2563eb,#8957e5);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.35rem;flex-shrink:0;box-shadow:0 4px 12px rgba(37,99,235,0.25)">👨‍⚕️</div>
+  <div>
+    <div style="font-weight:700;font-size:0.92rem;color:#f1f5f9;line-height:1.2">
+      {user.get("full_name") or user["username"]}</div>
+    <div style="font-size:0.75rem;color:#388bfd;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px">
+      {user.get("role", "doctor")}</div>
   </div>
 </div>""",
             unsafe_allow_html=True,
@@ -211,11 +210,20 @@ def page_dashboard() -> None:
     stats = db.db_get_stats(user["id"])
     scans = db.db_get_all_scans(user["id"])
 
-    st.markdown("## 📊 Dashboard")
     st.markdown(
-        f'<p style="color:#8b949e;margin-top:-8px">'
-        f'Welcome back, <b>{user.get("full_name") or user["username"]}</b> · '
-        f'{datetime.now():%A, %d %B %Y}</p>',
+        f"""
+<div style="background:linear-gradient(135deg,rgba(37,99,235,0.08) 0%,rgba(139,92,246,0.08) 100%);
+  border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:24px;margin-bottom:24px;
+  display:flex;align-items:center;justify-content:space-between">
+  <div>
+    <h2 style="margin:0;font-size:1.85rem;font-weight:800;background:linear-gradient(135deg,#388bfd,#8957e5);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Clinical Diagnostics Workspace</h2>
+    <p style="margin:6px 0 0;color:#8b949e;font-size:0.92rem">attending physician: <b style="color:#f1f5f9">{user.get("full_name") or user["username"]}</b> · role: <span style="color:#388bfd;font-weight:600;text-transform:uppercase;font-size:0.75rem">{user.get("role", "doctor")}</span></p>
+  </div>
+  <div style="text-align:right">
+    <span style="font-size:1.7rem;font-weight:800;color:#3b82f6;font-family:'JetBrains Mono',monospace">{datetime.now():%H:%M}</span>
+    <p style="margin:2px 0 0;color:#636e7b;font-size:0.72rem;text-transform:uppercase;letter-spacing:1.2px;font-weight:700">{datetime.now():%A, %d %B %Y}</p>
+  </div>
+</div>""",
         unsafe_allow_html=True,
     )
 
@@ -359,7 +367,7 @@ def page_analyze() -> None:
             "CT Scan":     "data/sample_images/ct_scan_sample.png",
         }
         if not uploaded:
-            st.caption("No file chosen — use a built-in demo image:")
+            st.markdown("<p style='font-size:0.8rem;color:#8b949e;margin-top:6px;margin-bottom:4px;font-weight:600'>💡 No file chosen? Load an attending clinical sample:</p>", unsafe_allow_html=True)
             if st.button("📷 Load Sample Image", key="btn_sample"):
                 st.session_state["_sample_type"] = scan_type
 
@@ -413,13 +421,13 @@ def page_analyze() -> None:
                 """
 <div style="height:420px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:#161b22;border-radius:12px;border:2px dashed #30363d;
-  color:#484f58">
-  <div style="font-size:3rem">🏥</div>
-  <div style="font-size:1rem;margin-top:.8rem;font-weight:600">
-    Upload an image to see AI results</div>
-  <div style="font-size:.78rem;margin-top:.3rem">
-    Chest X-Ray · Brain MRI · CT Scan</div>
+  background:rgba(30,41,59,0.2);border-radius:20px;border:2px dashed rgba(56,139,253,0.25);
+  color:#8b949e;padding:30px;text-align:center">
+  <div class="pulse-icon" style="font-size:3.8rem;margin-bottom:1rem">🔬</div>
+  <div style="font-size:1.2rem;font-weight:700;color:#f1f5f9;margin-bottom:6px">Awaiting Diagnostics Input</div>
+  <div style="font-size:.85rem;color:#8b949e;max-width:320px;line-height:1.4">
+    Upload a clinical scan or select a sample image, then trigger the neural network to execute Grad-CAM++ feature maps and classify findings.
+  </div>
 </div>""",
                 unsafe_allow_html=True,
             )
