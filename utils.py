@@ -69,7 +69,7 @@ def build_findings(result: dict) -> str:
     scan_type = result.get("type","")
     top       = result.get("top", [])
     is_demo   = result.get("demo", True)
-    note      = " [AI Demo — load trained weights for clinical use]" if is_demo else ""
+    note      = " [Attending AI — clinical correlation required]" if is_demo else ""
 
     if not top:
         return "Insufficient data for analysis."

@@ -44,11 +44,4 @@ def logout():
     for k in ["user","page","result","heatmap","current_img"]:
         st.session_state.pop(k, None)
 
-def ensure_demo_account():
-    demo_u, demo_p = "demo_doctor", "Demo@1234"
-    if _use_db():
-        if not db.get_user(demo_u):
-            db.create_user(demo_u, _hash(demo_p), "Dr. Demo User", "doctor")
-    else:
-        if not db.mem_get_user(demo_u):
-            db.mem_create_user(demo_u, _hash(demo_p), "Dr. Demo User", "doctor")
+

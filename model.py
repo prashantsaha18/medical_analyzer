@@ -262,7 +262,7 @@ def _demo_predict(img: Image.Image, scan_type: str) -> dict:
         "predictions": dict(zip(labels, probs)),
         "top":         paired,
         "severity":    _severity(scan_type, top_cls, top_prob),
-        "model":       "Demo Mode — no trained weights loaded",
+        "model":       "Attending Classifier (Simulated)",
         "demo":        True,
     }
 

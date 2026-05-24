@@ -32,7 +32,6 @@ from utils import (
 
 # ── Startup ────────────────────────────────────────────────────────────────────
 db.init_db()
-auth.ensure_demo_account()
 
 # ── Session defaults ──────────────────────────────────────────────────────────
 _DEFAULTS = {
@@ -190,9 +189,9 @@ def render_sidebar() -> None:
             st.session_state.dark_mode = not st.session_state.dark_mode
             st.rerun()
 
-        db_status = "🟢 PostgreSQL" if db.is_db_available() else "🟡 Demo (memory)"
+        db_status = "🟢 PostgreSQL (Production)" if db.is_db_available() else "⚠️ Local Database (Demo Fallback)"
         st.markdown(
-            f'<div style="font-size:.68rem;color:#636e7b;padding:6px 8px;'
+            f'<div style="font-size:.68rem;color:#8b949e;padding:6px 8px;'
             f'background:#161b22;border-radius:7px;margin-top:6px">{db_status}</div>',
             unsafe_allow_html=True,
         )
@@ -218,6 +217,9 @@ def page_dashboard() -> None:
         f'{datetime.now():%A, %d %B %Y}</p>',
         unsafe_allow_html=True,
     )
+
+    if not db.is_db_available():
+        st.warning("⚠️ **System Status: Local Demo Fallback Mode** · The `DATABASE_URL` environment variable is not configured. Scans and patient data are currently stored in-memory and will be cleared when the server restarts. Please configure a PostgreSQL database for permanent production storage.")
 
     # Metric row
     m1, m2, m3, m4 = st.columns(4)
@@ -438,7 +440,7 @@ def page_analyze() -> None:
             f'{result.get("model","")}</span></div>'
             f'<div style="font-size:.78rem;color:{ss["text"]};margin-top:4px">'
             f'{result.get("type","")} · '
-            f'{"⚠ Demo mode" if is_demo else "✅ Trained model"}</div></div>',
+            f'{"ℹ️ Simulated Inference" if is_demo else "✅ Trained Model"}</div></div>',
             unsafe_allow_html=True,
         )
 
@@ -911,7 +913,7 @@ def page_settings() -> None:
                 f'font-size:.72rem;font-weight:700;'
                 f'background:{"#0d2818" if loaded else "#1c1205"};'
                 f'color:{"#4ade80" if loaded else "#f59e0b"}">'
-                f'{"✅ Loaded" if loaded else "🔄 Demo Mode"}</span></div>',
+                f'{"✅ Loaded" if loaded else "🔄 Simulated"}</span></div>',
                 unsafe_allow_html=True,
             )
         st.markdown(
