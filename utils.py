@@ -152,4 +152,16 @@ div[data-testid="stExpander"]{{background:{bg2}!important;
 ::-webkit-scrollbar-thumb{{background:{bg3};border-radius:3px}}
 [data-testid="stFileUploader"]{{background:{bg2}!important;
   border:2px dashed {ibrd}!important;border-radius:12px!important}}
+.mbox{{background:{bg2};border:1px solid {brd};border-radius:12px;
+  padding:16px 20px;text-align:center;margin-bottom:8px}}
+.mbox-num{{font-size:1.9rem;font-weight:800;font-family:'JetBrains Mono',monospace;color:{txt}}}
+.mbox-lbl{{font-size:.72rem;color:{txt2};text-transform:uppercase;letter-spacing:.8px;margin-top:4px}}
+.med-table{{width:100%;border-collapse:collapse;font-size:.82rem}}
+.med-table th{{background:#2563eb;color:white;padding:10px 12px;text-align:left;font-weight:600}}
+.med-table td{{padding:9px 12px;border-bottom:1px solid {brd};color:{txt}}}
+.med-table tr:hover td{{background:{bg3}}}
 </style>"""
+
+pil_to_bytes = image_to_bytes
+auto_detect_scan_type = auto_scan_type
+SEV_STYLES = SEV_STYLE
